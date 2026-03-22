@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { TextField } from '../TextField';
 
-export const NewMovie: React.FC<{ onAdd?: (m: Movie) => void }> = ({
+export const NewMovie: React.FC<{ onAdd?: (movie: Movie) => void }> = ({
   onAdd,
 }) => {
   const [title, setTitle] = useState('');
@@ -15,21 +15,27 @@ export const NewMovie: React.FC<{ onAdd?: (m: Movie) => void }> = ({
     title.trim() && imgUrl.trim() && imdbUrl.trim() && imdbId.trim(),
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isFormValid) {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const trimmedTitle = title.trim();
+    const trimmedImgUrl = imgUrl.trim();
+    const trimmedImdbUrl = imdbUrl.trim();
+    const trimmedImdbId = imdbId.trim();
+    const trimmedDescription = description.trim();
+
+    if (!trimmedTitle || !trimmedImgUrl || !trimmedImdbUrl || !trimmedImdbId) {
       return;
     }
 
-    const newMovie = {
-      title: title.trim(),
-      description: description.trim(),
-      imgUrl: imgUrl.trim(),
-      imdbId: imdbId.trim(),
-      imdbUrl: imdbUrl.trim(),
-    };
+    onAdd?.({
+      title: trimmedTitle,
+      description: trimmedDescription,
+      imgUrl: trimmedImgUrl,
+      imdbUrl: trimmedImdbUrl,
+      imdbId: trimmedImdbId,
+    });
 
-    onAdd?.(newMovie);
     setTitle('');
     setDescription('');
     setImgUrl('');
