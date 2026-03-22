@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TextField } from '../TextField';
+import { Movie } from '../../types/Movie';
 
 export const NewMovie: React.FC<{ onAdd?: (movie: Movie) => void }> = ({
   onAdd,
@@ -61,7 +62,6 @@ export const NewMovie: React.FC<{ onAdd?: (movie: Movie) => void }> = ({
         label="Description"
         value={description}
         onChange={setDescription}
-        required
       />
       <TextField
         name="imgUrl"
